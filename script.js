@@ -677,7 +677,119 @@ document.addEventListener('keypress', function(e) {
     }
 });
 
-// Smooth scroll behavior
+// Smooth scroll behavior and prevent unwanted scrolling
 window.addEventListener('load', function() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    document.body.style.overflow = 'hidden';
 });
+
+// Double click anywhere for surprise
+let doubleClickTimer;
+let clickCounter = 0;
+
+document.addEventListener('click', function(e) {
+    clickCounter++;
+    
+    if (clickCounter === 1) {
+        doubleClickTimer = setTimeout(() => {
+            clickCounter = 0;
+        }, 300);
+    } else if (clickCounter === 2) {
+        clearTimeout(doubleClickTimer);
+        clickCounter = 0;
+        
+        // Create surprise burst at click location
+        if (!e.target.closest('button')) {
+            for (let i = 0; i < 10; i++) {
+                const surprise = document.createElement('div');
+                surprise.innerHTML = ['✨', '⭐', '💫', '🌟'][Math.floor(Math.random() * 4)];
+                surprise.style.position = 'fixed';
+                surprise.style.left = e.clientX + 'px';
+                surprise.style.top = e.clientY + 'px';
+                surprise.style.fontSize = '20px';
+                surprise.style.zIndex = '9999';
+                surprise.style.animation = 'particleRise 1.5s ease-out forwards';
+                document.body.appendChild(surprise);
+                setTimeout(() => surprise.remove(), 1500);
+            }
+        }
+    }
+});
+
+// Hold space bar for 2 seconds for mega effect
+let spaceHoldTimer;
+let spacePressed = false;
+
+document.addEventListener('keydown', function(e) {
+    if (e.code === 'Space' && !spacePressed) {
+        spacePressed = true;
+        e.preventDefault();
+        spaceHoldTimer = setTimeout(() => {
+            // Mega space effect!
+            activateDiscoMode();
+            shakeScreen();
+            
+            // Explosion of everything!
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const emoji = ['💖', '💕', '✨', '💫', '🌟', '⭐', '💗', '💓'][Math.floor(Math.random() * 8)];
+                    const el = document.createElement('div');
+                    el.innerHTML = emoji;
+                    el.style.position = 'fixed';
+                    el.style.left = Math.random() * 100 + '%';
+                    el.style.top = Math.random() * 100 + '%';
+                    el.style.fontSize = (15 + Math.random() * 30) + 'px';
+                    el.style.animation = 'particleRise 2s ease-out forwards';
+                    el.style.zIndex = '9999';
+                    document.body.appendChild(el);
+                    setTimeout(() => el.remove(), 2000);
+                }, i * 20);
+            }
+        }, 2000);
+    }
+});
+
+document.addEventListener('keyup', function(e) {
+    if (e.code === 'Space') {
+        clearTimeout(spaceHoldTimer);
+        spacePressed = false;
+    }
+});
+
+// Mobile: Shake device for effect (if supported)
+if (window.DeviceMotionEvent) {
+    let lastShake = 0;
+    let shakeThreshold = 15;
+    
+    window.addEventListener('devicemotion', function(e) {
+        const acc = e.accelerationIncludingGravity;
+        const currentTime = new Date().getTime();
+        
+        if ((currentTime - lastShake) > 1000) {
+            const deltaX = Math.abs(acc.x);
+            const deltaY = Math.abs(acc.y);
+            const deltaZ = Math.abs(acc.z);
+            
+            if (deltaX > shakeThreshold || deltaY > shakeThreshold || deltaZ > shakeThreshold) {
+                lastShake = currentTime;
+                
+                // Device shaken! Create effect
+                shakeScreen();
+                for (let i = 0; i < 15; i++) {
+                    setTimeout(() => {
+                        const heart = document.createElement('div');
+                        heart.innerHTML = '💕';
+                        heart.style.position = 'fixed';
+                        heart.style.left = Math.random() * 100 + '%';
+                        heart.style.top = -30 + 'px';
+                        heart.style.fontSize = '25px';
+                        heart.style.animation = 'rose-fall 2s linear';
+                        heart.style.zIndex = '999';
+                        document.body.appendChild(heart);
+                        setTimeout(() => heart.remove(), 2000);
+                    }, i * 100);
+                }
+            }
+        }
+    });
+}
