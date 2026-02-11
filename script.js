@@ -14,6 +14,10 @@ document.addEventListener('DOMContentLoaded', function() {
     addHeartClickEffect();
     startContinuousParticles();
     playBackgroundMusic();
+    addMouseTrailEffect();
+    addSecretDiscoMode();
+    preventBodyScroll();
+    addTypingEffect();
 });
 
 // Create floating hearts in background
@@ -28,6 +32,110 @@ function createHearts() {
         heart.style.fontSize = (Math.random() * 30 + 15) + 'px';
         heartsContainer.appendChild(heart);
     }
+}
+
+// Prevent body scroll
+function preventBodyScroll() {
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+}
+
+// Mouse trail effect
+function addMouseTrailEffect() {
+    let lastTrailTime = 0;
+    const trailDelay = 50; // ms between trails
+    
+    document.addEventListener('mousemove', function(e) {
+        const currentTime = Date.now();
+        if (currentTime - lastTrailTime < trailDelay) return;
+        lastTrailTime = currentTime;
+        
+        const trail = document.createElement('div');
+        trail.className = 'heart-trail';
+        trail.innerHTML = ['❤️', '💕', '💖', '💗', '✨'][Math.floor(Math.random() * 5)];
+        trail.style.left = e.pageX + 'px';
+        trail.style.top = e.pageY + 'px';
+        document.body.appendChild(trail);
+        
+        setTimeout(() => trail.remove(), 1000);
+    });
+}
+
+// Secret disco mode (triple click the title)
+function addSecretDiscoMode() {
+    let clickCount = 0;
+    let clickTimer;
+    const title = document.querySelector('h1');
+    
+    title.addEventListener('click', function() {
+        clickCount++;
+        clearTimeout(clickTimer);
+        
+        if (clickCount === 3) {
+            activateDiscoMode();
+            clickCount = 0;
+        }
+        
+        clickTimer = setTimeout(() => {
+            clickCount = 0;
+        }, 500);
+    });
+}
+
+function activateDiscoMode() {
+    const container = document.querySelector('.container');
+    const body = document.body;
+    
+    // Add disco effect
+    container.classList.add('disco');
+    body.classList.add('disco');
+    
+    // Create crazy effects
+    for (let i = 0; i < 30; i++) {
+        setTimeout(() => {
+            const emoji = document.createElement('div');
+            emoji.innerHTML = ['🎉', '🎊', '✨', '💫', '⭐', '🌟'][Math.floor(Math.random() * 6)];
+            emoji.style.position = 'fixed';
+            emoji.style.left = Math.random() * 100 + '%';
+            emoji.style.top = Math.random() * 100 + '%';
+            emoji.style.fontSize = (20 + Math.random() * 30) + 'px';
+            emoji.style.animation = 'particleRise 2s ease-out forwards';
+            emoji.style.zIndex = '9999';
+            document.body.appendChild(emoji);
+            
+            setTimeout(() => emoji.remove(), 2000);
+        }, i * 50);
+    }
+    
+    // Stop disco after 3 seconds
+    setTimeout(() => {
+        container.classList.remove('disco');
+        body.classList.remove('disco');
+    }, 3000);
+}
+
+// Typing effect for messages
+function addTypingEffect() {
+    const messages = document.querySelectorAll('.message p');
+    messages.forEach((msg, index) => {
+        const originalText = msg.innerHTML;
+        msg.innerHTML = '';
+        msg.style.opacity = '1';
+        
+        let charIndex = 0;
+        const typingSpeed = 30;
+        
+        setTimeout(() => {
+            const typeInterval = setInterval(() => {
+                if (charIndex < originalText.length) {
+                    msg.innerHTML = originalText.substring(0, charIndex + 1);
+                    charIndex++;
+                } else {
+                    clearInterval(typeInterval);
+                }
+            }, typingSpeed);
+        }, index * 800);
+    });
 }
 
 // Create sparkle effects
@@ -46,7 +154,10 @@ function createSparkles() {
 // Add click effect to big heart
 function addHeartClickEffect() {
     const bigHeart = document.querySelector('.big-heart');
+    let clickCount = 0;
+    
     bigHeart.addEventListener('click', function() {
+        clickCount++;
         // Create burst of small hearts
         for (let i = 0; i < 15; i++) {
             const miniHeart = document.createElement('div');
@@ -70,6 +181,15 @@ function addHeartClickEffect() {
         setTimeout(() => {
             document.querySelector('.container').classList.remove('shake');
         }, 500);
+        
+        // Secret: 5 clicks makes the heart go crazy
+        if (clickCount === 5) {
+            bigHeart.classList.add('wave', 'neon-glow');
+            setTimeout(() => {
+                bigHeart.classList.remove('wave', 'neon-glow');
+            }, 3000);
+            clickCount = 0;
+        }
     });
 }
 
@@ -292,9 +412,20 @@ function createFireworkHeart() {
     }
 }
 
+// Screen shake effect
+function shakeScreen() {
+    document.body.classList.add('screen-shake');
+    setTimeout(() => {
+        document.body.classList.remove('screen-shake');
+    }, 500);
+}
+
 // Handle No button click
 function handleNo() {
     noClickCount++;
+    
+    // Shake the entire screen!
+    shakeScreen();
     
     const messages = [
         "Wait! Think again 🥺",
@@ -308,12 +439,21 @@ function handleNo() {
     ];
 
     const yesBtn = document.querySelector('.yes-btn');
+    const question = document.querySelector('.question');
     
     // Shake container on every No click
     document.querySelector('.container').classList.add('shake');
     setTimeout(() => {
         document.querySelector('.container').classList.remove('shake');
     }, 500);
+    
+    // Add glitch effect to question
+    if (noClickCount >= 3) {
+        question.classList.add('glitch');
+        setTimeout(() => {
+            question.classList.remove('glitch');
+        }, 300);
+    }
     
     // Create sad particles
     for (let i = 0; i < 5; i++) {
@@ -365,10 +505,31 @@ function handleNo() {
         noBtn.style.opacity = '0.5';
         noBtn.style.fontSize = '8px';
     } else if (noClickCount >= 8) {
-        // No button disappears and Yes is auto-selected
+        // ULTIMATE TRICK: No button explodes and Yes gets huge!
         noBtn.style.display = 'none';
+        
+        // Create explosion effect
+        for (let i = 0; i < 20; i++) {
+            const particle = document.createElement('div');
+            particle.innerHTML = '💥';
+            particle.style.position = 'fixed';
+            particle.style.left = noBtn.offsetLeft + 'px';
+            particle.style.top = noBtn.offsetTop + 'px';
+            particle.style.fontSize = '30px';
+            particle.style.zIndex = '9999';
+            const angle = (Math.PI * 2 * i) / 20;
+            const velocity = 100 + Math.random() * 50;
+            particle.style.animation = `particleRise ${1 + Math.random()}s ease-out forwards`;
+            document.body.appendChild(particle);
+            setTimeout(() => particle.remove(), 1500);
+        }
+        
         yesBtn.textContent = 'I KNEW you would say Yes! 💕';
         yesBtn.style.transform = 'scale(3)';
+        yesBtn.classList.add('wave', 'neon-glow');
+        
+        // Make screen go crazy
+        shakeScreen();
         
         // Automatically click Yes after 1.5 seconds
         setTimeout(() => {
@@ -442,7 +603,7 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
-// Easter egg: Konami code for extra hearts
+// Easter egg: Konami code for MEGA heart attack!
 let konamiCode = [];
 const konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
 
@@ -451,23 +612,68 @@ document.addEventListener('keydown', function(e) {
     konamiCode = konamiCode.slice(-10);
     
     if (konamiCode.join(',') === konamiSequence.join(',')) {
-        // Easter egg activated!
-        for (let i = 0; i < 50; i++) {
+        // MEGA Easter egg activated!
+        activateDiscoMode();
+        
+        for (let i = 0; i < 100; i++) {
             setTimeout(() => {
                 const heart = document.createElement('div');
-                heart.innerHTML = '💖';
+                heart.innerHTML = ['💖', '💕', '💗', '💓', '💝', '❤️'][Math.floor(Math.random() * 6)];
                 heart.style.position = 'fixed';
                 heart.style.left = Math.random() * 100 + '%';
                 heart.style.top = -50 + 'px';
-                heart.style.fontSize = (20 + Math.random() * 30) + 'px';
+                heart.style.fontSize = (20 + Math.random() * 40) + 'px';
                 heart.style.animation = 'rose-fall 3s linear';
                 heart.style.zIndex = '999';
                 document.body.appendChild(heart);
                 
                 setTimeout(() => heart.remove(), 3000);
-            }, i * 50);
+            }, i * 30);
         }
+        
+        // Make everything glow
+        document.querySelector('.container').classList.add('neon-glow');
+        setTimeout(() => {
+            document.querySelector('.container').classList.remove('neon-glow');
+        }, 3000);
+        
         konamiCode = [];
+    }
+});
+
+// Secret: Type "LOVE" to trigger special effect
+let typedKeys = [];
+document.addEventListener('keypress', function(e) {
+    typedKeys.push(e.key.toLowerCase());
+    typedKeys = typedKeys.slice(-4);
+    
+    if (typedKeys.join('') === 'love') {
+        // Love spell activated!
+        const yesBtn = document.querySelector('.yes-btn');
+        yesBtn.classList.add('wave', 'neon-glow');
+        yesBtn.style.transform = 'scale(2)';
+        
+        // Rain hearts
+        for (let i = 0; i < 30; i++) {
+            setTimeout(() => {
+                const heart = document.createElement('div');
+                heart.innerHTML = '💕';
+                heart.style.position = 'fixed';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.top = -30 + 'px';
+                heart.style.fontSize = '25px';
+                heart.style.animation = 'rose-fall 2s linear';
+                heart.style.zIndex = '999';
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 2000);
+            }, i * 100);
+        }
+        
+        setTimeout(() => {
+            yesBtn.classList.remove('wave', 'neon-glow');
+        }, 3000);
+        
+        typedKeys = [];
     }
 });
 
