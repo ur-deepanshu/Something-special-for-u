@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#ff0844">
+    <meta name="description" content="A special Valentine's Day proposal 💕">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>A Special Message For You ❤️</title>
+    
+    <!-- Preload for better performance -->
+    <link rel="preload" href="styles.css" as="style">
+    <link rel="preload" href="script.js" as="script">
+    
+    <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Favicon (optional - you can add a heart emoji favicon) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>❤️</text></svg>">
+</head>
+<body>
+    <!-- Background effects layer -->
+    <div class="hearts-background" id="hearts-bg"></div>
+    <div class="celebration" id="celebration"></div>
+
+    <!-- Main content container -->
+    <div class="container">
+        <!-- Clickable big heart (click for surprise!) -->
+        <div class="big-heart" title="Click me! 💕">❤️</div>
+        
+        <h1>Happy Valentine's Day! ✨</h1>
+        
+        <div class="message">
+            <p>From the moment I met you, my life has been filled with <span class="highlight">joy and happiness</span>.</p>
+            <p>Every conversation with you makes my day <span class="highlight">brighter</span>.</p>
+            <p>Your smile, your laugh, everything about you is <span class="highlight">absolutely amazing</span>.</p>
+            <p>You make my heart skip a beat every time I see you! 💓</p>
+        </div>
+
+        <div class="question">
+            Will you be my Valentine? 💕
+        </div>
+
+        <div class="button-container">
+            <button class="yes-btn" onclick="handleYes()" aria-label="Say Yes">
+                Yes! 💖
+            </button>
+            <button class="no-btn" id="noBtn" onclick="handleNo()" aria-label="Say No">
+                No
+            </button>
+        </div>
+
+        <div class="response" id="response" role="alert">
+            <h2>🎉 You just made me the happiest person! 🎉</h2>
+            <p>I promise to make every day as special as today!</p>
+            <p>Get ready for the most amazing Valentine's Day ever! 💕</p>
+            <p class="romantic-quote">"In all the world, there is no heart for me like yours. In all the world, there is no love for you like mine." - Maya Angelou</p>
+        </div>
+    </div>
+
+    <!-- Link to external JavaScript file -->
+    <script src="script.js"></script>
+</body>
+</html>
