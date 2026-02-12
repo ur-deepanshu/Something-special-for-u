@@ -76,6 +76,13 @@ body {
     overflow-y: auto;
     overflow-x: hidden;
     animation: fadeIn 1s ease-out;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.container::-webkit-scrollbar {
+    display: none;
 }
 
 @keyframes fadeIn {
@@ -209,6 +216,7 @@ h1 {
     margin: 30px 0;
     letter-spacing: 0.5px;
     font-family: 'Love Light', cursive;
+    transition: opacity 0.3s ease;
 }
 
 .button-container {
@@ -219,6 +227,7 @@ h1 {
     margin-top: 30px;
     position: relative;
     flex-wrap: wrap;
+    transition: opacity 0.3s ease;
 }
 
 button {
@@ -267,6 +276,7 @@ button {
 .response {
     display: none;
     animation: fadeIn 1s ease-out;
+    transition: opacity 0.3s ease;
 }
 
 .response h2 {
@@ -414,20 +424,7 @@ button {
                 0 0 40px rgba(219, 112, 147, 0.4);
 }
 
-/* Custom scrollbar */
-.container::-webkit-scrollbar {
-    width: 8px;
-}
-
-.container::-webkit-scrollbar-track {
-    background: #f9f9f9;
-    border-radius: 10px;
-}
-
-.container::-webkit-scrollbar-thumb {
-    background: #db7093;
-    border-radius: 10px;
-}
+/* Removed custom scrollbar styling - scrollbar is now hidden */
 
 /* Responsive Design - Mobile First */
 @media (max-width: 768px) {

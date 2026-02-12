@@ -67,13 +67,29 @@ function preventBodyScroll() {
 }
 
 // Handle Yes button click
-function handleYes() {
-    // Hide question and buttons
-    document.querySelector('.question').style.display = 'none';
-    document.querySelector('.button-container').style.display = 'none';
+function handleYes(event) {
+    if (event) event.preventDefault();
     
-    // Show response
-    document.getElementById('response').style.display = 'block';
+    // Smooth transition - hide question and buttons
+    const question = document.querySelector('.question');
+    const buttonContainer = document.querySelector('.button-container');
+    const response = document.getElementById('response');
+    const container = document.querySelector('.container');
+    
+    question.style.opacity = '0';
+    buttonContainer.style.opacity = '0';
+    
+    setTimeout(() => {
+        question.style.display = 'none';
+        buttonContainer.style.display = 'none';
+        
+        // Show response with smooth fade
+        response.style.display = 'block';
+        response.style.opacity = '0';
+        setTimeout(() => {
+            response.style.opacity = '1';
+        }, 50);
+    }, 300);
     
     // Create celebration
     const celebration = document.getElementById('celebration');
@@ -126,7 +142,9 @@ function handleYes() {
 }
 
 // Handle No button click
-function handleNo() {
+function handleNo(event) {
+    if (event) event.preventDefault();
+    
     noClickCount++;
     
     // Gentle pulse instead of aggressive shake
