@@ -40,6 +40,106 @@ function preventBodyScroll() {
     document.documentElement.style.overflow = 'hidden';
 }
 
+// LEGENDARY: Smooth particle burst effect
+function createSmoothParticleBurst(element) {
+    const rect = element.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    
+    const particles = ['💔', '😢', '🥺', '💧'];
+    for (let i = 0; i < 8; i++) {
+        const particle = document.createElement('div');
+        particle.innerHTML = particles[i % particles.length];
+        particle.style.position = 'fixed';
+        particle.style.left = centerX + 'px';
+        particle.style.top = centerY + 'px';
+        particle.style.fontSize = '24px';
+        particle.style.zIndex = '9999';
+        particle.style.pointerEvents = 'none';
+        particle.style.transition = 'all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';
+        document.body.appendChild(particle);
+        
+        const angle = (Math.PI * 2 * i) / 8;
+        const distance = 80;
+        
+        requestAnimationFrame(() => {
+            particle.style.transform = `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px) scale(0.5) rotate(${360 * Math.random()}deg)`;
+            particle.style.opacity = '0';
+        });
+        
+        setTimeout(() => particle.remove(), 800);
+    }
+}
+
+// LEGENDARY: Magical aura effect
+function createMagicalAura(element) {
+    const rect = element.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    
+    for (let i = 0; i < 3; i++) {
+        const aura = document.createElement('div');
+        aura.style.position = 'fixed';
+        aura.style.left = centerX + 'px';
+        aura.style.top = centerY + 'px';
+        aura.style.width = '100px';
+        aura.style.height = '100px';
+        aura.style.border = '3px solid rgba(255, 8, 68, 0.6)';
+        aura.style.borderRadius = '50%';
+        aura.style.transform = 'translate(-50%, -50%)';
+        aura.style.zIndex = '9998';
+        aura.style.pointerEvents = 'none';
+        aura.style.animation = `auraExpand ${1 + i * 0.3}s ease-out forwards`;
+        document.body.appendChild(aura);
+        
+        setTimeout(() => aura.remove(), 1000 + i * 300);
+    }
+}
+
+// LEGENDARY: Epic heart explosion effect (replaces boring wave)
+function triggerLegendaryHeartEffect() {
+    const bigHeart = document.querySelector('.big-heart');
+    const container = document.querySelector('.container');
+    
+    // Epic scale animation
+    bigHeart.style.transition = 'all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+    bigHeart.style.transform = 'scale(1.5) rotate(360deg)';
+    
+    // Radial heart explosion
+    for (let i = 0; i < 20; i++) {
+        setTimeout(() => {
+            const heart = document.createElement('div');
+            heart.innerHTML = ['💖', '💕', '💗', '💓'][Math.floor(Math.random() * 4)];
+            heart.style.position = 'fixed';
+            heart.style.left = bigHeart.offsetLeft + bigHeart.offsetWidth / 2 + 'px';
+            heart.style.top = bigHeart.offsetTop + bigHeart.offsetHeight / 2 + 'px';
+            heart.style.fontSize = '30px';
+            heart.style.zIndex = '9999';
+            heart.style.pointerEvents = 'none';
+            heart.style.transition = 'all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+            document.body.appendChild(heart);
+            
+            const angle = (Math.PI * 2 * i) / 20;
+            const distance = 150 + Math.random() * 100;
+            
+            requestAnimationFrame(() => {
+                heart.style.transform = `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px) scale(0.2) rotate(${720}deg)`;
+                heart.style.opacity = '0';
+            });
+            
+            setTimeout(() => heart.remove(), 1200);
+        }, i * 30);
+    }
+    
+    // Pulsing container
+    container.classList.add('pulse-effect');
+    
+    setTimeout(() => {
+        bigHeart.style.transform = 'scale(1) rotate(0deg)';
+        container.classList.remove('pulse-effect');
+    }, 1500);
+}
+
 // Mouse trail effect
 function addMouseTrailEffect() {
     let lastTrailTime = 0;
@@ -182,12 +282,9 @@ function addHeartClickEffect() {
             document.querySelector('.container').classList.remove('shake');
         }, 500);
         
-        // Secret: 5 clicks makes the heart go crazy
+        // Secret: 5 clicks triggers LEGENDARY heart explosion!
         if (clickCount === 5) {
-            bigHeart.classList.add('wave', 'neon-glow');
-            setTimeout(() => {
-                bigHeart.classList.remove('wave', 'neon-glow');
-            }, 3000);
+            triggerLegendaryHeartEffect();
             clickCount = 0;
         }
     });
@@ -412,20 +509,27 @@ function createFireworkHeart() {
     }
 }
 
-// Screen shake effect
-function shakeScreen() {
-    document.body.classList.add('screen-shake');
+// Smooth pulse effect (replaces laggy screen shake)
+function smoothPulse() {
+    const container = document.querySelector('.container');
+    container.style.animation = 'none';
     setTimeout(() => {
-        document.body.classList.remove('screen-shake');
-    }, 500);
+        container.style.animation = '';
+    }, 10);
+    
+    // Add smooth scale effect
+    container.classList.add('pulse-effect');
+    setTimeout(() => {
+        container.classList.remove('pulse-effect');
+    }, 600);
 }
 
 // Handle No button click
 function handleNo() {
     noClickCount++;
     
-    // Shake the entire screen!
-    shakeScreen();
+    // Smooth pulse instead of laggy shake
+    smoothPulse();
     
     const messages = [
         "Wait! Think again 🥺",
@@ -528,8 +632,9 @@ function handleNo() {
         yesBtn.style.transform = 'scale(3)';
         yesBtn.classList.add('wave', 'neon-glow');
         
-        // Make screen go crazy
-        shakeScreen();
+        // Smooth legendary transition
+        smoothPulse();
+        createMagicalAura(yesBtn);
         
         // Automatically click Yes after 1.5 seconds
         setTimeout(() => {
@@ -537,10 +642,8 @@ function handleNo() {
         }, 1500);
     }
     
-    // Vibrate on mobile
-    if (navigator.vibrate) {
-        navigator.vibrate(100);
-    }
+    // Create smooth particle burst instead of vibration
+    createSmoothParticleBurst(noBtn);
 }
 
 // Optional: Add subtle background music (commented out - uncomment to enable)
