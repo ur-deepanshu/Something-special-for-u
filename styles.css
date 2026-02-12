@@ -119,7 +119,7 @@ body {
     margin-bottom: 20px;
 }
 
-/* Wave rings that emanate from heart */
+/* Wave rings that emanate from heart - in heart shape! */
 .wave-ring {
     position: absolute;
     top: 50%;
@@ -127,36 +127,59 @@ body {
     transform: translate(-50%, -50%);
     width: 80px;
     height: 80px;
-    border: 2px solid #ff69b4;
-    border-radius: 50%;
     opacity: 0;
     pointer-events: none;
 }
 
+.wave-ring::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 72px;
+    background: transparent;
+    border: 2px solid #ff69b4;
+    border-radius: 50px 50px 0 0;
+}
+
+.wave-ring::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 80px;
+    height: 80px;
+    background: transparent;
+    border-radius: 50%;
+    border: 2px solid #ff69b4;
+    transform: translateX(-50%) rotate(-45deg);
+    transform-origin: 0 100%;
+}
+
 .wave-ring:nth-child(1) {
-    animation: waveRipple 3s ease-out infinite;
+    animation: heartWaveRipple 3s ease-out infinite;
 }
 
 .wave-ring:nth-child(2) {
-    animation: waveRipple 3s ease-out infinite 1s;
+    animation: heartWaveRipple 3s ease-out infinite 1s;
 }
 
 .wave-ring:nth-child(3) {
-    animation: waveRipple 3s ease-out infinite 2s;
+    animation: heartWaveRipple 3s ease-out infinite 2s;
 }
 
-@keyframes waveRipple {
+@keyframes heartWaveRipple {
     0% {
-        width: 80px;
-        height: 80px;
+        transform: translate(-50%, -50%) scale(0.8);
         opacity: 0;
     }
     10% {
         opacity: 0.6;
     }
     100% {
-        width: 200px;
-        height: 200px;
+        transform: translate(-50%, -50%) scale(2.5);
         opacity: 0;
     }
 }
