@@ -177,10 +177,11 @@ body {
 
 h1 {
     color: #db7093;
-    font-size: 38px;
+    font-size: 42px;
     margin-bottom: 20px;
     font-weight: 400;
     letter-spacing: 1px;
+    font-family: 'Satisfy', cursive;
 }
 
 .message {
@@ -188,7 +189,8 @@ h1 {
     font-size: 17px;
     line-height: 1.8;
     margin-bottom: 30px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Playwrite IN', cursive;
+    font-weight: 300;
 }
 
 .message p {
@@ -201,11 +203,12 @@ h1 {
 }
 
 .question {
-    font-size: 26px;
+    font-size: 28px;
     color: #db7093;
     font-weight: 400;
     margin: 30px 0;
     letter-spacing: 0.5px;
+    font-family: 'Love Light', cursive;
 }
 
 .button-container {
@@ -225,8 +228,8 @@ button {
     border-radius: 25px;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-weight: 500;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 400;
+    font-family: 'Playwrite IN', cursive;
 }
 
 .yes-btn {
@@ -268,9 +271,10 @@ button {
 
 .response h2 {
     color: #db7093;
-    font-size: 32px;
+    font-size: 36px;
     margin-bottom: 20px;
     font-weight: 400;
+    font-family: 'Satisfy', cursive;
 }
 
 .response p {
@@ -278,7 +282,8 @@ button {
     font-size: 17px;
     line-height: 1.8;
     margin: 15px 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Playwrite IN', cursive;
+    font-weight: 300;
 }
 
 .romantic-quote {
@@ -287,6 +292,8 @@ button {
     margin-top: 20px;
     padding-top: 20px;
     border-top: 1px solid #f0f0f0;
+    font-family: 'Satisfy', cursive;
+    font-size: 16px;
 }
 
 .celebration {
@@ -438,7 +445,7 @@ button {
     }
     
     h1 {
-        font-size: 32px;
+        font-size: 36px;
     }
     
     .message {
@@ -446,7 +453,7 @@ button {
     }
     
     .question {
-        font-size: 22px;
+        font-size: 24px;
     }
     
     button {
@@ -455,7 +462,11 @@ button {
     }
     
     .response h2 {
-        font-size: 26px;
+        font-size: 30px;
+    }
+    
+    .romantic-quote {
+        font-size: 15px;
     }
 }
 
@@ -473,7 +484,7 @@ button {
     }
     
     h1 {
-        font-size: 28px;
+        font-size: 32px;
     }
     
     .message {
@@ -481,7 +492,7 @@ button {
     }
     
     .question {
-        font-size: 20px;
+        font-size: 22px;
     }
     
     button {
@@ -491,5 +502,13 @@ button {
     
     .button-container {
         gap: 12px;
+    }
+    
+    .response h2 {
+        font-size: 26px;
+    }
+    
+    .romantic-quote {
+        font-size: 14px;
     }
 }
