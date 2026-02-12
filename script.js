@@ -3,10 +3,11 @@
 
 let noClickCount = 0;
 let heartClickCount = 0;
-const noBtn = document.getElementById('noBtn');
+let noBtn = null;
 
 // Initialize when page loads
 document.addEventListener('DOMContentLoaded', function() {
+    noBtn = document.getElementById('noBtn');
     createBackgroundHearts();
     preventBodyScroll();
     initHeartClickEvent();
@@ -16,8 +17,13 @@ document.addEventListener('DOMContentLoaded', function() {
 function initHeartClickEvent() {
     const bigHeart = document.querySelector('.big-heart');
     
-    bigHeart.addEventListener('click', function() {
+    if (!bigHeart) return;
+    
+    bigHeart.addEventListener('click', function(e) {
+        e.preventDefault();
         heartClickCount++;
+        
+        console.log('Heart clicked! Count:', heartClickCount);
         
         // Add bounce effect on each click
         bigHeart.style.transform = 'scale(0.9)';
@@ -145,7 +151,10 @@ function handleYes(event) {
 function handleNo(event) {
     if (event) event.preventDefault();
     
+    if (!noBtn) noBtn = document.getElementById('noBtn');
+    
     noClickCount++;
+    console.log('No clicked! Count:', noClickCount);
     
     // Gentle pulse instead of aggressive shake
     const container = document.querySelector('.container');
@@ -209,6 +218,8 @@ function handleNo(event) {
 // Make No button run away from cursor (simplified)
 let lastMoveTime = 0;
 document.addEventListener('mousemove', function(e) {
+    if (!noBtn) return;
+    
     const currentTime = Date.now();
     if (currentTime - lastMoveTime < 50) return;
     lastMoveTime = currentTime;
@@ -247,6 +258,8 @@ document.addEventListener('mousemove', function(e) {
 
 // Touch support for mobile
 document.addEventListener('touchmove', function(e) {
+    if (!noBtn) return;
+    
     if (noClickCount > 2 && noBtn.style.display !== 'none') {
         const touch = e.touches[0];
         const rect = noBtn.getBoundingClientRect();
