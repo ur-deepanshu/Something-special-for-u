@@ -2,13 +2,49 @@
 // Simple, clean, and romantic 💕
 
 let noClickCount = 0;
+let heartClickCount = 0;
 const noBtn = document.getElementById('noBtn');
 
 // Initialize when page loads
 document.addEventListener('DOMContentLoaded', function() {
     createBackgroundHearts();
     preventBodyScroll();
+    initHeartClickEvent();
 });
+
+// Heart click event - shows "Chirkut" after 5 clicks
+function initHeartClickEvent() {
+    const bigHeart = document.querySelector('.big-heart');
+    
+    bigHeart.addEventListener('click', function() {
+        heartClickCount++;
+        
+        // Add bounce effect on each click
+        bigHeart.style.transform = 'scale(0.9)';
+        setTimeout(() => {
+            bigHeart.style.transform = 'scale(1)';
+        }, 100);
+        
+        // After 5 clicks, show "Chirkut" text
+        if (heartClickCount === 5) {
+            showChirkutText();
+            heartClickCount = 0; // Reset counter
+        }
+    });
+}
+
+// Show "Chirkut" text with lovely animation
+function showChirkutText() {
+    const chirkutDiv = document.createElement('div');
+    chirkutDiv.className = 'chirkut-text';
+    chirkutDiv.textContent = 'Chirkut';
+    document.body.appendChild(chirkutDiv);
+    
+    // Remove after animation completes (2 seconds)
+    setTimeout(() => {
+        chirkutDiv.remove();
+    }, 2000);
+}
 
 // Create gentle floating hearts in background (reduced from 30 to 15)
 function createBackgroundHearts() {

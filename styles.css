@@ -20,6 +20,10 @@ body {
     justify-content: center;
     align-items: center;
     padding: 20px;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 .hearts-background {
@@ -118,10 +122,57 @@ body {
     margin-bottom: 20px;
     cursor: pointer;
     transition: transform 0.3s ease;
+    position: relative;
 }
 
 .big-heart:hover {
     transform: scale(1.1);
+}
+
+.big-heart:active {
+    transform: scale(0.95);
+}
+
+/* Chirkut text that appears after 5 clicks */
+.chirkut-text {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Love Light', 'Satisfy', 'Playwrite IN', cursive;
+    font-size: 80px;
+    color: #db7093;
+    z-index: 9999;
+    pointer-events: none;
+    animation: chirkutAppear 2s ease-out forwards;
+    text-shadow: 0 0 20px rgba(219, 112, 147, 0.6),
+                 0 0 40px rgba(219, 112, 147, 0.4);
+    font-weight: 400;
+}
+
+@keyframes chirkutAppear {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5) rotate(-10deg);
+    }
+    20% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.2) rotate(5deg);
+    }
+    40% {
+        transform: translate(-50%, -50%) scale(1) rotate(-3deg);
+    }
+    60% {
+        transform: translate(-50%, -50%) scale(1.1) rotate(2deg);
+    }
+    80% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1) rotate(0deg);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8) rotate(0deg);
+    }
 }
 
 h1 {
@@ -371,7 +422,7 @@ button {
     border-radius: 10px;
 }
 
-/* Responsive Design */
+/* Responsive Design - Mobile First */
 @media (max-width: 768px) {
     .container {
         padding: 40px 25px;
@@ -379,6 +430,10 @@ button {
     }
     
     .big-heart {
+        font-size: 60px;
+    }
+    
+    .chirkut-text {
         font-size: 60px;
     }
     
@@ -410,6 +465,10 @@ button {
     }
     
     .big-heart {
+        font-size: 50px;
+    }
+    
+    .chirkut-text {
         font-size: 50px;
     }
     
