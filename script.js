@@ -12,7 +12,38 @@ document.addEventListener('DOMContentLoaded', function() {
     preventBodyScroll();
     initHeartClickEvent();
     initSecretPhotoTrigger();
+    showHintAfterDelay();
 });
+
+// Show hint message after 10 seconds
+function showHintAfterDelay() {
+    setTimeout(() => {
+        const hintMessage = document.getElementById('hintMessage');
+        if (hintMessage && heartClickCount === 0 && titleClickCount === 0) {
+            // Hint will show via CSS animation
+            // Auto-hide after 5 seconds
+            setTimeout(() => {
+                hintMessage.style.animation = 'hintFadeOut 1s ease-out forwards';
+            }, 5000);
+        }
+    }, 10000);
+}
+
+// Update click counter display
+function updateClickCounter(count, total) {
+    const counter = document.getElementById('clickCounter');
+    if (counter) {
+        counter.textContent = `❤️ ${count}/${total}`;
+        counter.classList.add('show');
+        
+        // Hide counter after completing the clicks
+        if (count === 0) {
+            setTimeout(() => {
+                counter.classList.remove('show');
+            }, 1000);
+        }
+    }
+}
 
 // Heart click event - shows secret photo after 4 clicks (Because you're in my heart 😍🥰)
 function initHeartClickEvent() {
@@ -20,6 +51,9 @@ function initHeartClickEvent() {
     
     bigHeart.addEventListener('click', function() {
         heartClickCount++;
+        
+        // Update click counter display
+        updateClickCounter(heartClickCount, 4);
         
         // Add bounce effect on each click
         bigHeart.style.transform = 'scale(0.9)';
@@ -31,6 +65,7 @@ function initHeartClickEvent() {
         if (heartClickCount === 4) {
             showSecretPhoto();
             heartClickCount = 0; // Reset counter
+            updateClickCounter(0, 4); // Hide counter
         }
     });
 }

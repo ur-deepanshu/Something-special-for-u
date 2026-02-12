@@ -123,14 +123,77 @@ body {
     cursor: pointer;
     transition: transform 0.3s ease;
     position: relative;
+    animation: heartPulse 2s ease-in-out infinite;
 }
 
 .big-heart:hover {
     transform: scale(1.1);
+    animation: none;
 }
 
 .big-heart:active {
     transform: scale(0.95);
+}
+
+/* Pulse animation for the heart */
+@keyframes heartPulse {
+    0%, 100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 5px rgba(255, 105, 180, 0.3));
+    }
+    50% {
+        transform: scale(1.05);
+        filter: drop-shadow(0 0 15px rgba(255, 105, 180, 0.6));
+    }
+}
+
+/* Hint message styling */
+.hint-message {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    font-family: 'Playwrite IN', cursive;
+    font-size: 14px;
+    color: #db7093;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 10px 20px;
+    border-radius: 25px;
+    box-shadow: 0 4px 15px rgba(219, 112, 147, 0.2);
+    opacity: 0;
+    animation: hintFadeIn 1s ease-out 10s forwards;
+    z-index: 100;
+    pointer-events: none;
+    backdrop-filter: blur(10px);
+}
+
+@keyframes hintFadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+/* Click counter styling */
+.click-counter {
+    position: fixed;
+    top: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Love Light', cursive;
+    font-size: 24px;
+    color: #ff69b4;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 8px 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 100;
+    pointer-events: none;
+    backdrop-filter: blur(10px);
+}
+
+.click-counter.show {
+    opacity: 1;
 }
 
 /* Chirkut text that appears after 5 clicks */
@@ -148,6 +211,13 @@ body {
     text-shadow: 0 0 20px rgba(219, 112, 147, 0.6),
                  0 0 40px rgba(219, 112, 147, 0.4);
     font-weight: 400;
+}
+
+@keyframes hintFadeOut {
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
 }
 
 @keyframes chirkutAppear {
