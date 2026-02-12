@@ -20,10 +20,6 @@ body {
     justify-content: center;
     align-items: center;
     padding: 20px;
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
 }
 
 .hearts-background {
@@ -130,6 +126,9 @@ body {
     cursor: pointer;
     transition: transform 0.3s ease;
     position: relative;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .big-heart:hover {
@@ -189,6 +188,8 @@ h1 {
     font-weight: 400;
     letter-spacing: 1px;
     font-family: 'Satisfy', cursive;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 .message {
@@ -198,6 +199,8 @@ h1 {
     margin-bottom: 30px;
     font-family: 'Playwrite IN', cursive;
     font-weight: 300;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 .message p {
@@ -217,6 +220,8 @@ h1 {
     letter-spacing: 0.5px;
     font-family: 'Love Light', cursive;
     transition: opacity 0.3s ease;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 .button-container {
@@ -239,6 +244,9 @@ button {
     transition: all 0.3s ease;
     font-weight: 400;
     font-family: 'Playwrite IN', cursive;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .yes-btn {
