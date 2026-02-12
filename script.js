@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initHeartClickEvent();
 });
 
-// Heart click event - shows "Chirkut" after 5 clicks
+// Heart click event - shows "Chirkut" after 5 clicks, secret photo after 10 clicks
 function initHeartClickEvent() {
     const bigHeart = document.querySelector('.big-heart');
     
@@ -28,6 +28,11 @@ function initHeartClickEvent() {
         // After 5 clicks, show "Chirkut" text
         if (heartClickCount === 5) {
             showChirkutText();
+        }
+        
+        // After 10 clicks, show secret photo (Easter Egg!)
+        if (heartClickCount === 10) {
+            showSecretPhoto();
             heartClickCount = 0; // Reset counter
         }
     });
@@ -45,6 +50,53 @@ function showChirkutText() {
         chirkutDiv.remove();
     }, 2000);
 }
+
+// Easter Egg: Show secret photo of crush
+function showSecretPhoto() {
+    const photoContainer = document.getElementById('secretPhoto');
+    photoContainer.classList.add('show');
+    
+    // Add hearts animation around the photo
+    createPhotoHearts();
+}
+
+// Close secret photo
+function closeSecretPhoto() {
+    const photoContainer = document.getElementById('secretPhoto');
+    photoContainer.classList.remove('show');
+}
+
+// Create floating hearts around photo
+function createPhotoHearts() {
+    for (let i = 0; i < 15; i++) {
+        setTimeout(() => {
+            const heart = document.createElement('div');
+            heart.innerHTML = '💕';
+            heart.style.position = 'fixed';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.top = '100%';
+            heart.style.fontSize = (20 + Math.random() * 20) + 'px';
+            heart.style.zIndex = '9999';
+            heart.style.pointerEvents = 'none';
+            heart.style.animation = 'photoHeartRise 3s ease-out forwards';
+            document.body.appendChild(heart);
+            
+            setTimeout(() => heart.remove(), 3000);
+        }, i * 100);
+    }
+}
+
+// Add CSS animation for photo hearts
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes photoHeartRise {
+        to {
+            transform: translateY(-100vh) rotate(360deg);
+            opacity: 0;
+        }
+    }
+`;
+document.head.appendChild(style);
 
 // Create gentle floating hearts in background (reduced from 30 to 15)
 function createBackgroundHearts() {
