@@ -3,29 +3,10 @@
 
 let noClickCount = 0;
 let heartClickCount = 0;
-let noBtn = null;
-let yesBtn = null;
+const noBtn = document.getElementById('noBtn');
 
 // Initialize when page loads
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM loaded, initializing...');
-    
-    noBtn = document.getElementById('noBtn');
-    yesBtn = document.getElementById('yesBtn');
-    
-    console.log('noBtn:', noBtn);
-    console.log('yesBtn:', yesBtn);
-    
-    if (noBtn) {
-        noBtn.addEventListener('click', handleNo);
-        console.log('No button listener added');
-    }
-    
-    if (yesBtn) {
-        yesBtn.addEventListener('click', handleYes);
-        console.log('Yes button listener added');
-    }
-    
     createBackgroundHearts();
     preventBodyScroll();
     initHeartClickEvent();
@@ -35,13 +16,8 @@ document.addEventListener('DOMContentLoaded', function() {
 function initHeartClickEvent() {
     const bigHeart = document.querySelector('.big-heart');
     
-    if (!bigHeart) return;
-    
-    bigHeart.addEventListener('click', function(e) {
-        e.preventDefault();
+    bigHeart.addEventListener('click', function() {
         heartClickCount++;
-        
-        console.log('Heart clicked! Count:', heartClickCount);
         
         // Add bounce effect on each click
         bigHeart.style.transform = 'scale(0.9)';
@@ -91,16 +67,15 @@ function preventBodyScroll() {
 }
 
 // Handle Yes button click
-function handleYes(event) {
-    console.log('Yes button clicked!');
-    if (event) event.preventDefault();
+function handleYes(e) {
+    if (e) e.preventDefault();
     
-    // Smooth transition - hide question and buttons
+    // Hide question and buttons with smooth transition
     const question = document.querySelector('.question');
     const buttonContainer = document.querySelector('.button-container');
-    const response = document.getElementById('response');
-    const container = document.querySelector('.container');
     
+    question.style.transition = 'opacity 0.3s ease';
+    buttonContainer.style.transition = 'opacity 0.3s ease';
     question.style.opacity = '0';
     buttonContainer.style.opacity = '0';
     
@@ -108,7 +83,8 @@ function handleYes(event) {
         question.style.display = 'none';
         buttonContainer.style.display = 'none';
         
-        // Show response with smooth fade
+        // Show response
+        const response = document.getElementById('response');
         response.style.display = 'block';
         response.style.opacity = '0';
         setTimeout(() => {
@@ -146,7 +122,7 @@ function handleYes(event) {
         celebration.appendChild(rose);
     }
     
-    // Gentle pulse effect
+    // Gentle glow effect instead of transform scale
     const container = document.querySelector('.container');
     container.classList.add('pulse-effect');
     setTimeout(() => {
@@ -167,17 +143,12 @@ function handleYes(event) {
 }
 
 // Handle No button click
-function handleNo(event) {
-    console.log('No button clicked!');
-    if (event) event.preventDefault();
-    
-    if (!noBtn) noBtn = document.getElementById('noBtn');
-    if (!yesBtn) yesBtn = document.getElementById('yesBtn');
+function handleNo(e) {
+    if (e) e.preventDefault();
     
     noClickCount++;
-    console.log('No clicked! Count:', noClickCount);
     
-    // Gentle pulse instead of aggressive shake
+    // Gentle glow effect instead of transform scale
     const container = document.querySelector('.container');
     container.classList.add('pulse-effect');
     setTimeout(() => {
@@ -195,7 +166,7 @@ function handleNo(event) {
         "Please? 🥺💕"
     ];
 
-    if (!yesBtn) yesBtn = document.getElementById('yesBtn');
+    const yesBtn = document.querySelector('.yes-btn');
     
     // Progressive changes based on click count
     if (noClickCount === 1) {
@@ -239,8 +210,6 @@ function handleNo(event) {
 // Make No button run away from cursor (simplified)
 let lastMoveTime = 0;
 document.addEventListener('mousemove', function(e) {
-    if (!noBtn) return;
-    
     const currentTime = Date.now();
     if (currentTime - lastMoveTime < 50) return;
     lastMoveTime = currentTime;
@@ -279,8 +248,6 @@ document.addEventListener('mousemove', function(e) {
 
 // Touch support for mobile
 document.addEventListener('touchmove', function(e) {
-    if (!noBtn) return;
-    
     if (noClickCount > 2 && noBtn.style.display !== 'none') {
         const touch = e.touches[0];
         const rect = noBtn.getBoundingClientRect();

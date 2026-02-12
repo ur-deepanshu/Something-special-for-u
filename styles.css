@@ -20,6 +20,10 @@ body {
     justify-content: center;
     align-items: center;
     padding: 20px;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 .hearts-background {
@@ -72,13 +76,6 @@ body {
     overflow-y: auto;
     overflow-x: hidden;
     animation: fadeIn 1s ease-out;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE and Edge */
-}
-
-/* Hide scrollbar for Chrome, Safari and Opera */
-.container::-webkit-scrollbar {
-    display: none;
 }
 
 @keyframes fadeIn {
@@ -98,10 +95,10 @@ body {
 
 @keyframes gentlePulse {
     0%, 100% {
-        transform: scale(1);
+        box-shadow: 0 10px 40px rgba(219, 112, 147, 0.15);
     }
     50% {
-        transform: scale(1.02);
+        box-shadow: 0 15px 50px rgba(219, 112, 147, 0.25);
     }
 }
 
@@ -126,11 +123,6 @@ body {
     cursor: pointer;
     transition: transform 0.3s ease;
     position: relative;
-    user-select: none;
-    -webkit-user-select: none;
-    -webkit-tap-highlight-color: transparent;
-    pointer-events: auto;
-    z-index: 10;
 }
 
 .big-heart:hover {
@@ -190,8 +182,6 @@ h1 {
     font-weight: 400;
     letter-spacing: 1px;
     font-family: 'Satisfy', cursive;
-    user-select: none;
-    -webkit-user-select: none;
 }
 
 .message {
@@ -201,8 +191,6 @@ h1 {
     margin-bottom: 30px;
     font-family: 'Playwrite IN', cursive;
     font-weight: 300;
-    user-select: none;
-    -webkit-user-select: none;
 }
 
 .message p {
@@ -221,9 +209,6 @@ h1 {
     margin: 30px 0;
     letter-spacing: 0.5px;
     font-family: 'Love Light', cursive;
-    transition: opacity 0.3s ease;
-    user-select: none;
-    -webkit-user-select: none;
 }
 
 .button-container {
@@ -234,7 +219,6 @@ h1 {
     margin-top: 30px;
     position: relative;
     flex-wrap: wrap;
-    transition: opacity 0.3s ease;
 }
 
 button {
@@ -246,12 +230,8 @@ button {
     transition: all 0.3s ease;
     font-weight: 400;
     font-family: 'Playwrite IN', cursive;
-    user-select: none;
-    -webkit-user-select: none;
+    outline: none;
     -webkit-tap-highlight-color: transparent;
-    pointer-events: auto;
-    position: relative;
-    z-index: 10;
 }
 
 .yes-btn {
@@ -288,8 +268,8 @@ button {
 
 .response {
     display: none;
-    animation: fadeIn 1s ease-out;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.5s ease;
+    opacity: 1;
 }
 
 .response h2 {
@@ -437,7 +417,29 @@ button {
                 0 0 40px rgba(219, 112, 147, 0.4);
 }
 
-/* Removed custom scrollbar styling - scrollbar is now hidden */
+/* Custom scrollbar - Hidden */
+.container::-webkit-scrollbar {
+    width: 0;
+    display: none;
+}
+
+.container::-webkit-scrollbar-track {
+    display: none;
+}
+
+.container::-webkit-scrollbar-thumb {
+    display: none;
+}
+
+/* Hide scrollbar for Firefox */
+.container {
+    scrollbar-width: none;
+}
+
+/* Hide scrollbar for IE/Edge */
+.container {
+    -ms-overflow-style: none;
+}
 
 /* Responsive Design - Mobile First */
 @media (max-width: 768px) {
