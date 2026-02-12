@@ -311,7 +311,7 @@ function createParticle() {
     setTimeout(() => particle.remove(), 4000);
 }
 
-// Make No button run away from cursor (enhanced)
+// Make No button run away from cursor (enhanced with proper boundaries)
 let lastMoveTime = 0;
 document.addEventListener('mousemove', function(e) {
     const currentTime = Date.now();
@@ -337,10 +337,13 @@ document.addEventListener('mousemove', function(e) {
             let newX = btnCenterX - Math.cos(angle) * moveDistance;
             let newY = btnCenterY - Math.sin(angle) * moveDistance;
             
-            // Keep button in viewport with margin
-            const margin = 50;
-            newX = Math.max(margin, Math.min(window.innerWidth - rect.width - margin, newX - rect.width / 2));
-            newY = Math.max(margin, Math.min(window.innerHeight - rect.height - margin, newY - rect.height / 2));
+            // Keep button STRICTLY within viewport with larger margin to prevent scrolling
+            const margin = 80;
+            const maxX = window.innerWidth - rect.width - margin;
+            const maxY = window.innerHeight - rect.height - margin;
+            
+            newX = Math.max(margin, Math.min(maxX, newX - rect.width / 2));
+            newY = Math.max(margin, Math.min(maxY, newY - rect.height / 2));
             
             noBtn.style.left = newX + 'px';
             noBtn.style.top = newY + 'px';
@@ -348,7 +351,7 @@ document.addEventListener('mousemove', function(e) {
     }
 });
 
-// Touch support for mobile
+// Touch support for mobile with proper boundaries
 let touchMoveHandler = function(e) {
     if (noClickCount > 1 && noBtn.style.display !== 'none') {
         const touch = e.touches[0];
@@ -369,9 +372,13 @@ let touchMoveHandler = function(e) {
             let newX = btnCenterX - Math.cos(angle) * moveDistance;
             let newY = btnCenterY - Math.sin(angle) * moveDistance;
             
-            const margin = 30;
-            newX = Math.max(margin, Math.min(window.innerWidth - rect.width - margin, newX - rect.width / 2));
-            newY = Math.max(margin, Math.min(window.innerHeight - rect.height - margin, newY - rect.height / 2));
+            // STRICT mobile boundaries to prevent scrolling
+            const margin = 60;
+            const maxX = window.innerWidth - rect.width - margin;
+            const maxY = window.innerHeight - rect.height - margin;
+            
+            newX = Math.max(margin, Math.min(maxX, newX - rect.width / 2));
+            newY = Math.max(margin, Math.min(maxY, newY - rect.height / 2));
             
             noBtn.style.left = newX + 'px';
             noBtn.style.top = newY + 'px';
@@ -458,6 +465,20 @@ function handleYes() {
             clearInterval(heartRainInterval);
         }
     }, 100);
+    
+    // ⏱️ AUTO-CLEAR celebration after 8 seconds (heart rain timer)
+    setTimeout(() => {
+        // Fade out celebration
+        celebration.style.transition = 'opacity 1s ease-out';
+        celebration.style.opacity = '0';
+        
+        // Remove celebration elements after fade
+        setTimeout(() => {
+            celebration.innerHTML = '';
+            celebration.style.display = 'none';
+            celebration.style.opacity = '1';
+        }, 1000);
+    }, 8000); // 8 seconds of celebration (5 heart rain + 3 extra for confetti)
 }
 
 // Create firework heart effect
