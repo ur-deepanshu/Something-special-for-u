@@ -129,6 +129,8 @@ body {
     user-select: none;
     -webkit-user-select: none;
     -webkit-tap-highlight-color: transparent;
+    pointer-events: auto;
+    z-index: 10;
 }
 
 .big-heart:hover {
@@ -247,6 +249,9 @@ button {
     user-select: none;
     -webkit-user-select: none;
     -webkit-tap-highlight-color: transparent;
+    pointer-events: auto;
+    position: relative;
+    z-index: 10;
 }
 
 .yes-btn {

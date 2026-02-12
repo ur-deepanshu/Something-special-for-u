@@ -4,10 +4,28 @@
 let noClickCount = 0;
 let heartClickCount = 0;
 let noBtn = null;
+let yesBtn = null;
 
 // Initialize when page loads
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded, initializing...');
+    
     noBtn = document.getElementById('noBtn');
+    yesBtn = document.getElementById('yesBtn');
+    
+    console.log('noBtn:', noBtn);
+    console.log('yesBtn:', yesBtn);
+    
+    if (noBtn) {
+        noBtn.addEventListener('click', handleNo);
+        console.log('No button listener added');
+    }
+    
+    if (yesBtn) {
+        yesBtn.addEventListener('click', handleYes);
+        console.log('Yes button listener added');
+    }
+    
     createBackgroundHearts();
     preventBodyScroll();
     initHeartClickEvent();
@@ -74,6 +92,7 @@ function preventBodyScroll() {
 
 // Handle Yes button click
 function handleYes(event) {
+    console.log('Yes button clicked!');
     if (event) event.preventDefault();
     
     // Smooth transition - hide question and buttons
@@ -149,9 +168,11 @@ function handleYes(event) {
 
 // Handle No button click
 function handleNo(event) {
+    console.log('No button clicked!');
     if (event) event.preventDefault();
     
     if (!noBtn) noBtn = document.getElementById('noBtn');
+    if (!yesBtn) yesBtn = document.getElementById('yesBtn');
     
     noClickCount++;
     console.log('No clicked! Count:', noClickCount);
@@ -174,7 +195,7 @@ function handleNo(event) {
         "Please? 🥺💕"
     ];
 
-    const yesBtn = document.querySelector('.yes-btn');
+    if (!yesBtn) yesBtn = document.getElementById('yesBtn');
     
     // Progressive changes based on click count
     if (noClickCount === 1) {
