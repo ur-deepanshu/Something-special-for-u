@@ -3,7 +3,7 @@
 
 let noClickCount = 0;
 let heartClickCount = 0;
-let secretClickCount = 0;
+let titleClickCount = 0;
 const noBtn = document.getElementById('noBtn');
 
 // Initialize when page loads
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initSecretPhotoTrigger();
 });
 
-// Heart click event - shows "Chirkut" after 5 clicks
+// Heart click event - shows secret photo after 4 clicks (Because you're in my heart 😍🥰)
 function initHeartClickEvent() {
     const bigHeart = document.querySelector('.big-heart');
     
@@ -27,20 +27,20 @@ function initHeartClickEvent() {
             bigHeart.style.transform = 'scale(1)';
         }, 100);
         
-        // After 5 clicks, show "Chirkut" text
-        if (heartClickCount === 5) {
-            showChirkutText();
+        // After 4 clicks, show secret photo (Because you're in my heart 😍🥰)
+        if (heartClickCount === 4) {
+            showSecretPhoto();
             heartClickCount = 0; // Reset counter
         }
     });
 }
 
-// Secret photo trigger - click title 10 times
+// Secret photo trigger - click title 5 times to see "Chirkut"
 function initSecretPhotoTrigger() {
     const secretTrigger = document.getElementById('secretTrigger');
     
     secretTrigger.addEventListener('click', function() {
-        secretClickCount++;
+        titleClickCount++;
         
         // Add subtle glow effect on each click
         secretTrigger.style.textShadow = '0 0 20px rgba(219, 112, 147, 0.8)';
@@ -48,10 +48,10 @@ function initSecretPhotoTrigger() {
             secretTrigger.style.textShadow = '';
         }, 200);
         
-        // After 10 clicks, show secret photo (Easter Egg!)
-        if (secretClickCount === 10) {
-            showSecretPhoto();
-            secretClickCount = 0; // Reset counter
+        // After 5 clicks, show "Chirkut" text
+        if (titleClickCount === 5) {
+            showChirkutText();
+            titleClickCount = 0; // Reset counter
         }
     });
 }
