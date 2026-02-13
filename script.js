@@ -95,7 +95,7 @@ function initSecretPhotoTrigger() {
 function showChirkutText() {
     const chirkutDiv = document.createElement('div');
     chirkutDiv.className = 'chirkut-text';
-    chirkutDiv.textContent = 'Chirkut';
+    chirkutDiv.textContent = 'Snehaa';
     document.body.appendChild(chirkutDiv);
     
     // Remove after animation completes (2 seconds)
